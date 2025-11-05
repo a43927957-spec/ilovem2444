@@ -265,19 +265,37 @@ const Auth = {
         
         return true;
     }
-};
+    };
+    
+    console.log('✓ Auth 對象創建成功');
+} catch (error) {
+    console.error('✗ Auth 對象創建失敗:', error);
+    alert('Auth 載入錯誤: ' + error.message);
+}
 
 // 全局函數
 function showLogin() {
-    Auth.showLogin();
+    if (typeof Auth !== 'undefined' && Auth.showLogin) {
+        Auth.showLogin();
+    } else {
+        console.error('Auth.showLogin 未定義');
+    }
 }
 
 function showRegister() {
-    Auth.showRegister();
+    if (typeof Auth !== 'undefined' && Auth.showRegister) {
+        Auth.showRegister();
+    } else {
+        console.error('Auth.showRegister 未定義');
+    }
 }
 
 function logout() {
-    Auth.logout();
+    if (typeof Auth !== 'undefined' && Auth.logout) {
+        Auth.logout();
+    } else {
+        console.error('Auth.logout 未定義');
+    }
 }
 
 // 切換側邊欄
@@ -288,5 +306,17 @@ function toggleSidebar() {
 
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
-    Auth.init();
+    try {
+        if (typeof Auth !== 'undefined' && Auth.init) {
+            console.log('開始初始化 Auth...');
+            Auth.init();
+            console.log('✓ Auth 初始化成功');
+        } else {
+            console.error('✗ Auth 對象未定義或缺少 init 方法');
+            alert('Auth 初始化失敗：Auth 對象未正確創建');
+        }
+    } catch (error) {
+        console.error('✗ Auth 初始化失敗:', error);
+        alert('Auth 初始化錯誤: ' + error.message + '\n請查看控制台了解詳情');
+    }
 });
