@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>簡單測試 - 載入檢測</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        button { padding: 10px 20px; font-size: 16px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>JS 載入檢測</h1>
+    <div id="status"></div>
+    <button onclick="testShowRegister()">測試 showRegister()</button>
+    <button onclick="testAuth()">測試 Auth 對象</button>
+    
+    <!-- 按照原始順序載入 JS -->
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script>
+        function updateStatus() {
+            const statusDiv = document.getElementById('status');
+            let html = '';
+            
+            // 檢查 Utils
+            if (typeof Utils !== 'undefined') {
+                html += '<div class="status success">✓ Utils 已載入</div>';
+                html += '<div class="status success">├─ Utils.storage: ' + (typeof Utils.storage !== 'undefined' ? '✓' : '✗') + '</div>';
+                html += '<div class="status success">├─ Utils.validateEmail: ' + (typeof Utils.validateEmail === 'function' ? '✓' : '✗') + '</div>';
+                html += '<div class="status success">└─ Utils.showToast: ' + (typeof Utils.showToast === 'function' ? '✓' : '✗') + '</div>';
+            } else {
+                html += '<div class="status error">✗ Utils 未載入</div>';
+            }
+            
+            // 檢查 Auth
+            if (typeof Auth !== 'undefined') {
+                html += '<div class="status success">✓ Auth 已載入</div>';
+                html += '<div class="status success">├─ Auth.init: ' + (typeof Auth.init === 'function' ? '✓' : '✗') + '</div>';
+                html += '<div class="status success">├─ Auth.showLogin: ' + (typeof Auth.showLogin === 'function' ? '✓' : '✗') + '</div>';
+                html += '<div class="status success">└─ Auth.showRegister: ' + (typeof Auth.showRegister === 'function' ? '✓' : '✗') + '</div>';
+            } else {
+                html += '<div class="status error">✗ Auth 未載入</div>';
+            }
+            
+            // 檢查全局函數
+            if (typeof showRegister === 'function') {
+                html += '<div class="status success">✓ showRegister() 函數已定義</div>';
+            } else {
+                html += '<div class="status error">✗ showRegister() 函數未定義</div>';
+            }
+            
+            if (typeof showLogin === 'function') {
+                html += '<div class="status success">✓ showLogin() 函數已定義</div>';
+            } else {
+                html += '<div class="status error">✗ showLogin() 函數未定義</div>';
+            }
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        function testShowRegister() {
+            alert('測試 showRegister():\n\n' + 
+                  'typeof showRegister: ' + typeof showRegister + '\n' +
+                  'typeof Auth: ' + typeof Auth);
+            if (typeof showRegister === 'function') {
+                try {
+                    showRegister();
+                    alert('showRegister() 執行成功！');
+                } catch (e) {
+                    alert('showRegister() 執行失敗: ' + e.message);
+                }
+            }
+        }
+        
+        function testAuth() {
+            alert('Auth 對象檢測:\n\n' +
+                  'typeof Auth: ' + typeof Auth + '\n' +
+                  (typeof Auth !== 'undefined' ? 
+                   'Auth.showRegister: ' + typeof Auth.showRegister : 
+                   'Auth 未定義'));
+        }
+        
+        // 頁面載入時檢測
+        window.addEventListener('load', () => {
+            setTimeout(updateStatus, 100);
+        });
+        
+        // DOMContentLoaded 時也檢測
+        document.addEventListener('DOMContentLoaded', updateStatus);
+        
+        // 立即檢測
+        updateStatus();
+    </script>
+</body>
+</html>

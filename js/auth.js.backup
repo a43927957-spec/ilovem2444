@@ -222,20 +222,14 @@ const Auth = {
     
     // 顯示應用
     showApp() {
-        const loginPage = document.getElementById('loginPage');
-        const registerPage = document.getElementById('registerPage');
-        const appPage = document.getElementById('appPage');
-        
-        if (loginPage) loginPage.classList.remove('active');
-        if (registerPage) registerPage.classList.remove('active');
-        if (appPage) appPage.classList.add('active');
+        document.getElementById('loginPage').classList.remove('active');
+        document.getElementById('registerPage').classList.remove('active');
+        document.getElementById('appPage').classList.add('active');
         
         // 更新用戶信息
         if (this.currentUser) {
-            const userName = document.getElementById('userName');
-            const userEmail = document.getElementById('userEmail');
-            if (userName) userName.textContent = this.currentUser.name;
-            if (userEmail) userEmail.textContent = this.currentUser.email;
+            document.getElementById('userName').textContent = this.currentUser.name;
+            document.getElementById('userEmail').textContent = this.currentUser.email;
         }
         
         // 載入儀表板

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入除錯測試</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .debug-box {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .btn-secondary {
+            background: #2196F3;
+        }
+        .btn-secondary:hover {
+            background: #0b7dda;
+        }
+        .log {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+            font-family: monospace;
+        }
+        .log-item {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 登入功能除錯</h1>
+        
+        <div class="debug-box" id="status">
+            <strong>載入狀態：</strong><br>
+            Utils: <span id="utilsCheck">檢查中...</span><br>
+            Auth: <span id="authCheck">檢查中...</span><br>
+            表單: <span id="formCheck">檢查中...</span>
+        </div>
+
+        <form id="testLoginForm">
+            <div class="form-group">
+                <label>電子郵件</label>
+                <input type="email" id="emailInput" value="test@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label>密碼</label>
+                <input type="password" id="passwordInput" value="Test1234" required>
+            </div>
+            
+            <button type="submit">🔐 登入測試</button>
+            <button type="button" class="btn-secondary" onclick="testRegister()">📝 註冊測試</button>
+        </form>
+
+        <h3 style="margin-top: 20px; margin-bottom: 10px;">執行日誌：</h3>
+        <div class="log" id="logContainer"></div>
+    </div>
+
+    <script>
+        // 日誌函數
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const logItem = document.createElement('div');
+            logItem.className = `log-item ${type}`;
+            const time = new Date().toLocaleTimeString();
+            logItem.textContent = `[${time}] ${message}`;
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            console.log(`[${type}] ${message}`);
+        }
+
+        // 簡化的 Utils
+        const Utils = {
+            storage: {
+                set(key, value) {
+                    try {
+                        localStorage.setItem(key, JSON.stringify(value));
+                        log(`Storage.set: ${key}`, 'success');
+                        return true;
+                    } catch (e) {
+                        log(`Storage.set 錯誤: ${e.message}`, 'error');
+                        return false;
+                    }
+                },
+                get(key) {
+                    try {
+                        const item = localStorage.getItem(key);
+                        log(`Storage.get: ${key} = ${item ? '有資料' : '無資料'}`, 'info');
+                        return item ? JSON.parse(item) : null;
+                    } catch (e) {
+                        log(`Storage.get 錯誤: ${e.message}`, 'error');
+                        return null;
+                    }
+                }
+            },
+            validateEmail(email) {
+                const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                log(`驗證 Email (${email}): ${valid ? '有效' : '無效'}`, valid ? 'success' : 'error');
+                return valid;
+            },
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+        };
+
+        // 檢查狀態
+        function checkStatus() {
+            document.getElementById('utilsCheck').innerHTML = 
+                '<span class="success">✓ 已載入</span>';
+            document.getElementById('authCheck').innerHTML = 
+                '<span class="success">✓ 已載入（簡化版）</span>';
+            
+            const form = document.getElementById('testLoginForm');
+            document.getElementById('formCheck').innerHTML = form ? 
+                '<span class="success">✓ 已找到</span>' : 
+                '<span class="error">✗ 未找到</span>';
+        }
+
+        // 註冊功能
+        function testRegister() {
+            log('===== 開始註冊測試 =====', 'info');
+            
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            
+            if (!Utils.validateEmail(email)) {
+                alert('Email 格式無效');
+                log('註冊失敗：Email 無效', 'error');
+                return;
+            }
+            
+            log(`註冊資訊 - Email: ${email}, Password: ${password}`, 'info');
+            
+            // 檢查是否已註冊
+            const users = Utils.storage.get('users') || [];
+            log(`目前用戶數量: ${users.length}`, 'info');
+            
+            if (users.find(u => u.email === email)) {
+                alert('此 Email 已被註冊！請直接登入。');
+                log('註冊失敗：Email 已存在', 'error');
+                return;
+            }
+            
+            // 創建新用戶
+            const newUser = {
+                id: Utils.generateId(),
+                name: '測試用戶',
+                email: email,
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            Utils.storage.set('users', users);
+            
+            log('✓ 註冊成功！', 'success');
+            alert('註冊成功！現在可以登入了。');
+        }
+
+        // 登入功能
+        function testLogin(e) {
+            e.preventDefault();
+            log('===== 開始登入測試 =====', 'info');
+            
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            
+            log(`登入嘗試 - Email: ${email}, Password: ${password}`, 'info');
+            
+            if (!Utils.validateEmail(email)) {
+                alert('Email 格式無效');
+                log('登入失敗：Email 無效', 'error');
+                return;
+            }
+            
+            if (!password) {
+                alert('請輸入密碼');
+                log('登入失敗：密碼為空', 'error');
+                return;
+            }
+            
+            // 檢查用戶
+            const users = Utils.storage.get('users') || [];
+            log(`從 Storage 讀取到 ${users.length} 個用戶`, 'info');
+            
+            if (users.length === 0) {
+                alert('沒有註冊用戶！請先註冊。');
+                log('登入失敗：沒有用戶資料', 'error');
+                return;
+            }
+            
+            // 列出所有用戶（除錯用）
+            users.forEach((u, i) => {
+                log(`用戶 ${i + 1}: ${u.email}`, 'info');
+            });
+            
+            const user = users.find(u => u.email === email);
+            
+            if (!user) {
+                alert(`找不到用戶：${email}\n請先註冊！`);
+                log(`登入失敗：找不到用戶 ${email}`, 'error');
+                return;
+            }
+            
+            log(`找到用戶：${user.email}`, 'success');
+            
+            if (user.password !== password) {
+                alert('密碼錯誤！');
+                log(`登入失敗：密碼不符 (輸入: ${password}, 正確: ${user.password})`, 'error');
+                return;
+            }
+            
+            // 登入成功
+            const authUser = {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            };
+            
+            Utils.storage.set('currentUser', authUser);
+            Utils.storage.set('authToken', 'token_' + Utils.generateId());
+            
+            log('✓✓✓ 登入成功！✓✓✓', 'success');
+            alert('登入成功！\n\n如果這個頁面能成功，說明登入邏輯沒問題。\n問題可能在於原始頁面的事件綁定。');
+        }
+
+        // 綁定表單事件
+        document.getElementById('testLoginForm').addEventListener('submit', testLogin);
+        
+        // 頁面載入完成
+        window.addEventListener('load', () => {
+            checkStatus();
+            log('頁面載入完成', 'success');
+            log('請先點擊「註冊測試」建立帳號，然後點擊「登入測試」', 'info');
+        });
+    </script>
+</body>
+</html>
