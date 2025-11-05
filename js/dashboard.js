@@ -385,6 +385,121 @@ const Dashboard = {
         }
     },
 
+    load() {
+        // 渲染儀表板 HTML
+        const contentWrapper = document.getElementById('contentWrapper');
+        if (!contentWrapper) {
+            console.error('找不到 contentWrapper 元素');
+            return;
+        }
+
+        contentWrapper.innerHTML = `
+            <div class="dashboard-container" style="padding: 20px;">
+                <div class="page-header" style="margin-bottom: 30px;">
+                    <h1 style="font-size: 28px; margin-bottom: 5px;"><i class="fas fa-home"></i> 儀表板</h1>
+                    <p style="color: #666;">歡迎回來！這是您的數據概覽</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3 id="stat-chatbots" style="font-size: 32px; margin: 0;">0</h3>
+                                <p style="margin: 0; color: #666;">聊天機器人</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h3 id="stat-subscribers" style="font-size: 32px; margin: 0;">0</h3>
+                                <p style="margin: 0; color: #666;">總訂閱數</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div>
+                                <h3 id="stat-messages" style="font-size: 32px; margin: 0;">0</h3>
+                                <p style="margin: 0; color: #666;">訊息總數</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 60px; height: 60px; border-radius: 12px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div>
+                                <h3 id="stat-revenue" style="font-size: 32px; margin: 0;">NT$ 0</h3>
+                                <p style="margin: 0; color: #666;">本月營收</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; border-radius: 10px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h2 style="font-size: 20px; margin-bottom: 20px;"><i class="fas fa-chart-line"></i> 最近活動</h2>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 12px; border-radius: 8px; background: #f8f9fa;">
+                            <i class="fas fa-user-plus" style="font-size: 20px; color: #667eea;"></i>
+                            <div style="flex: 1;">
+                                <p style="margin: 0; font-weight: 500;">新訂閱者加入了 Facebook Messenger</p>
+                                <span style="font-size: 12px; color: #666;">5 分鐘前</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 12px; border-radius: 8px; background: #f8f9fa;">
+                            <i class="fas fa-comment" style="font-size: 20px; color: #4facfe;"></i>
+                            <div style="flex: 1;">
+                                <p style="margin: 0; font-weight: 500;">收到訊息來自 LINE 用戶</p>
+                                <span style="font-size: 12px; color: #666;">12 分鐘前</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 12px; border-radius: 8px; background: #f8f9fa;">
+                            <i class="fas fa-shopping-cart" style="font-size: 20px; color: #43e97b;"></i>
+                            <div style="flex: 1;">
+                                <p style="margin: 0; font-weight: 500;">新訂單 NT$ 1,200</p>
+                                <span style="font-size: 12px; color: #666;">25 分鐘前</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; border-radius: 10px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 20px; margin-bottom: 20px;"><i class="fas fa-tasks"></i> 快速操作</h2>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button style="padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-plus"></i> 建立機器人
+                        </button>
+                        <button style="padding: 12px 24px; background: #4facfe; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-paper-plane"></i> 發送推播
+                        </button>
+                        <button style="padding: 12px 24px; background: #43e97b; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-chart-bar"></i> 查看報表
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // 初始化數據動畫
+        setTimeout(() => {
+            this.loadStats();
+        }, 100);
+    },
+
     destroy() {
         // Clean up charts
         if (this.charts.activity) {
