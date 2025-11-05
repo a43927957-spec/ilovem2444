@@ -283,6 +283,10 @@ const Utils = {
 // 全局錯誤處理
 window.addEventListener('error', (e) => {
     console.error('Global error:', e.error);
+    // 在開發環境中顯示錯誤
+    if (window.location.hostname === 'localhost' || window.location.hostname.includes('sandbox')) {
+        alert('JavaScript Error: ' + e.message + '\nFile: ' + e.filename + '\nLine: ' + e.lineno);
+    }
 });
 
 window.addEventListener('unhandledrejection', (e) => {

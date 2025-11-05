@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試頁面 - ilovem2444</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/mail.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #fff;
+            border: 2px solid #333;
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 99999;
+            max-width: 300px;
+            font-size: 12px;
+        }
+        .debug-info h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .debug-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .debug-success {
+            color: green;
+        }
+        .debug-error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 除錯資訊 -->
+    <div class="debug-info">
+        <h3>🔍 除錯資訊</h3>
+        <p id="utilsStatus">Utils: 載入中...</p>
+        <p id="authStatus">Auth: 載入中...</p>
+        <p id="appStatus">App: 載入中...</p>
+        <p id="functionStatus">全局函數: 檢查中...</p>
+    </div>
+
+    <!-- 登入頁面 -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-robot"></i>
+                        <h1>ilovem2444</h1>
+                    </div>
+                    <p class="tagline">測試版本 - 功能診斷</p>
+                </div>
+                
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail">
+                            <i class="fas fa-envelope"></i>
+                            電子郵件
+                        </label>
+                        <input type="email" id="loginEmail" required placeholder="test@example.com" value="test@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">
+                            <i class="fas fa-lock"></i>
+                            密碼
+                        </label>
+                        <input type="password" id="loginPassword" required placeholder="Test1234" value="Test1234">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i>
+                        登入
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>或</span>
+                    </div>
+                    
+                    <button type="button" class="btn btn-outline btn-block" onclick="testShowRegister()">
+                        <i class="fas fa-user-plus"></i>
+                        註冊新帳號（測試）
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 註冊頁面 -->
+    <div id="registerPage" class="page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-robot"></i>
+                        <h1>ilovem2444</h1>
+                    </div>
+                    <p class="tagline">建立您的專屬帳號</p>
+                </div>
+                
+                <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="registerName">
+                            <i class="fas fa-user"></i>
+                            姓名
+                        </label>
+                        <input type="text" id="registerName" required placeholder="測試用戶" value="測試用戶">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail">
+                            <i class="fas fa-envelope"></i>
+                            電子郵件
+                        </label>
+                        <input type="email" id="registerEmail" required placeholder="test@example.com" value="test@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword">
+                            <i class="fas fa-lock"></i>
+                            密碼
+                        </label>
+                        <input type="password" id="registerPassword" required placeholder="Test1234" value="Test1234">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">
+                            <i class="fas fa-lock"></i>
+                            確認密碼
+                        </label>
+                        <input type="password" id="registerConfirmPassword" required placeholder="Test1234" value="Test1234">
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox" id="agreeTerms" checked>
+                            <span>我同意服務條款和隱私政策</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-user-plus"></i>
+                        註冊
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>或</span>
+                    </div>
+                    
+                    <button type="button" class="btn btn-outline btn-block" onclick="testShowLogin()">
+                        <i class="fas fa-sign-in-alt"></i>
+                        返回登入
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主應用頁面 -->
+    <div id="appPage" class="page">
+        <div style="padding: 40px; text-align: center;">
+            <h1>✅ 登入成功！</h1>
+            <p>如果您看到這個頁面，表示登入功能正常運作。</p>
+            <button class="btn btn-primary" onclick="testLogout()">登出測試</button>
+        </div>
+    </div>
+
+    <!-- Toast 通知 -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- 載入動畫 -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script>
+        // 測試腳本
+        function updateDebugStatus() {
+            document.getElementById('utilsStatus').innerHTML = 
+                typeof Utils !== 'undefined' ? 
+                '<span class="debug-success">✓ Utils 已載入</span>' : 
+                '<span class="debug-error">✗ Utils 未載入</span>';
+            
+            document.getElementById('authStatus').innerHTML = 
+                typeof Auth !== 'undefined' ? 
+                '<span class="debug-success">✓ Auth 已載入</span>' : 
+                '<span class="debug-error">✗ Auth 未載入</span>';
+            
+            document.getElementById('appStatus').innerHTML = 
+                typeof App !== 'undefined' ? 
+                '<span class="debug-success">✓ App 已載入</span>' : 
+                '<span class="debug-error">✗ App 未載入 (正常)</span>';
+            
+            const functionsOk = 
+                typeof showLogin === 'function' && 
+                typeof showRegister === 'function' && 
+                typeof logout === 'function';
+            
+            document.getElementById('functionStatus').innerHTML = functionsOk ?
+                '<span class="debug-success">✓ 全局函數正常</span>' : 
+                '<span class="debug-error">✗ 全局函數未定義</span>';
+        }
+
+        function testShowRegister() {
+            console.log('測試 showRegister 函數');
+            if (typeof showRegister === 'function') {
+                showRegister();
+            } else if (typeof Auth !== 'undefined' && typeof Auth.showRegister === 'function') {
+                Auth.showRegister();
+            } else {
+                alert('showRegister 函數不存在！');
+            }
+        }
+
+        function testShowLogin() {
+            console.log('測試 showLogin 函數');
+            if (typeof showLogin === 'function') {
+                showLogin();
+            } else if (typeof Auth !== 'undefined' && typeof Auth.showLogin === 'function') {
+                Auth.showLogin();
+            } else {
+                alert('showLogin 函數不存在！');
+            }
+        }
+
+        function testLogout() {
+            if (typeof logout === 'function') {
+                logout();
+            } else if (typeof Auth !== 'undefined' && typeof Auth.logout === 'function') {
+                Auth.logout();
+            }
+        }
+
+        // 頁面載入完成後更新狀態
+        window.addEventListener('load', () => {
+            setTimeout(updateDebugStatus, 500);
+        });
+
+        // DOMContentLoaded 時也更新一次
+        document.addEventListener('DOMContentLoaded', updateDebugStatus);
+    </script>
+</body>
+</html>
