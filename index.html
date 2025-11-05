@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>ilovem2444 - 聊天機器人管理平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- 登入頁面 -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-robot"></i>
+                        <h1>ilovem2444</h1>
+                    </div>
+                    <p class="tagline">專業聊天機器人管理平台</p>
+                </div>
+                
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail">
+                            <i class="fas fa-envelope"></i>
+                            電子郵件
+                        </label>
+                        <input type="email" id="loginEmail" required placeholder="請輸入您的電子郵件">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">
+                            <i class="fas fa-lock"></i>
+                            密碼
+                        </label>
+                        <input type="password" id="loginPassword" required placeholder="請輸入密碼">
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox" id="rememberMe">
+                            <span>記住我</span>
+                        </label>
+                        <a href="#" class="forgot-password">忘記密碼？</a>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i>
+                        登入
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>或</span>
+                    </div>
+                    
+                    <button type="button" class="btn btn-outline btn-block" onclick="showRegister()">
+                        <i class="fas fa-user-plus"></i>
+                        註冊新帳號
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>支援平台：</p>
+                    <div class="platform-icons">
+                        <i class="fab fa-facebook-messenger" title="Facebook Messenger"></i>
+                        <i class="fab fa-line" title="LINE"></i>
+                        <i class="fab fa-instagram" title="Instagram"></i>
+                        <i class="fas fa-comments" title="LiveChat"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 註冊頁面 -->
+    <div id="registerPage" class="page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-robot"></i>
+                        <h1>ilovem2444</h1>
+                    </div>
+                    <p class="tagline">建立您的專屬帳號</p>
+                </div>
+                
+                <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="registerName">
+                            <i class="fas fa-user"></i>
+                            姓名
+                        </label>
+                        <input type="text" id="registerName" required placeholder="請輸入您的姓名">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail">
+                            <i class="fas fa-envelope"></i>
+                            電子郵件
+                        </label>
+                        <input type="email" id="registerEmail" required placeholder="請輸入電子郵件">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword">
+                            <i class="fas fa-lock"></i>
+                            密碼
+                        </label>
+                        <input type="password" id="registerPassword" required placeholder="至少8個字元">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">
+                            <i class="fas fa-lock"></i>
+                            確認密碼
+                        </label>
+                        <input type="password" id="registerConfirmPassword" required placeholder="再次輸入密碼">
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span>我同意<a href="#">服務條款</a>和<a href="#">隱私政策</a></span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-user-plus"></i>
+                        註冊
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>或</span>
+                    </div>
+                    
+                    <button type="button" class="btn btn-outline btn-block" onclick="showLogin()">
+                        <i class="fas fa-sign-in-alt"></i>
+                        已有帳號？立即登入
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主應用頁面 -->
+    <div id="appPage" class="page">
+        <!-- 側邊欄 -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <span>ilovem2444</span>
+                </div>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>儀表板</span>
+                </a>
+                <a href="#" class="nav-item" data-page="chatbot">
+                    <i class="fas fa-robot"></i>
+                    <span>聊天機器人</span>
+                </a>
+                <a href="#" class="nav-item" data-page="users">
+                    <i class="fas fa-users"></i>
+                    <span>用戶管理</span>
+                </a>
+                <a href="#" class="nav-item" data-page="ecommerce">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>電商管理</span>
+                </a>
+                <a href="#" class="nav-item" data-page="broadcast">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>推播訊息</span>
+                </a>
+                <a href="#" class="nav-item" data-page="livechat">
+                    <i class="fas fa-comments"></i>
+                    <span>LiveChat</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>數據分析</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>設定</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">用戶名稱</div>
+                        <div class="user-email" id="userEmail">user@example.com</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- 主內容區 -->
+        <main class="main-content">
+            <!-- 頂部導航欄 -->
+            <header class="top-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜尋功能、用戶、訂單...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="header-btn" title="通知">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="header-btn" title="說明">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- 內容容器 -->
+            <div class="content-wrapper" id="contentWrapper">
+                <!-- 頁面內容將動態載入到這裡 -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast 通知 -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- 載入動畫 -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/users.js"></script>
+    <script src="js/ecommerce.js"></script>
+    <script src="js/broadcast.js"></script>
+    <script src="js/livechat.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
