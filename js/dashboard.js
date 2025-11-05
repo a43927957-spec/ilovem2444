@@ -407,4 +407,3 @@ if (document.readyState === 'loading') {
     // DOM already loaded
     // Dashboard will be initialized by App.loadPage()
 }
-```

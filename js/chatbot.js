@@ -474,4 +474,3 @@ const Chatbot = {
         this.currentChatbot = null;
     }
 };
-```

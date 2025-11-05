@@ -649,6 +649,4 @@ const Settings = {
         // Cleanup if needed
     }
 };
-```
 
----

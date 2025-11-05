@@ -698,4 +698,3 @@ const LiveChat = {
         this.currentConversation = null;
     }
 };
-```

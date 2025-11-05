@@ -601,4 +601,3 @@ ${data.commonQueries.map((q, i) =>
         });
     }
 };
-```

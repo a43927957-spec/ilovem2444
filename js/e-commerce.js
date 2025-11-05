@@ -683,4 +683,3 @@ const Ecommerce = {
         // Cleanup if needed
     }
 };
-```

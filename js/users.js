@@ -585,4 +585,3 @@ const Users = {
         // Cleanup if needed
     }
 };
-```
